@@ -1,0 +1,48 @@
+# Environment and Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build and Distribution
+build/
+dist/
+*.egg-info/
+
+# Data and Media
+datasets/
+*.mp4
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Generated Reports and Visualization
+*.html
+*.json
+!pyproject.toml
+!metadata.json
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Agentic AI related config files
+.agent/
+.agent/rules/
+.references/
+
+# Test output
+tests/output/
+*.htmlbuild_inv/

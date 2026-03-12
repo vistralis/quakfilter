@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ruff
+        run: pip install ruff
+      - name: Check formatting
+        run: ruff format --check src/ tests/ examples/
+      - name: Check linting
+        run: ruff check src/ tests/ examples/
+
+  clang-format:
+    name: C++ Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check C++ formatting
+        run: |
+          find csrc/ -name '*.cpp' -o -name '*.hpp' | \
+            xargs clang-format --dry-run --Werror
+
+  build-and-test:
+    name: Test (Py ${{ matrix.python-version }}, ${{ matrix.include-eigen.eigen-label }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        include-eigen:
+          - eigen-label: "Eigen 5 + OpenMP"
+            system-eigen: "OFF"
+            install-openmp: true
+          - eigen-label: "Eigen 5 (no OpenMP)"
+            system-eigen: "OFF"
+            install-openmp: false
+          - eigen-label: "System Eigen 3"
+            system-eigen: "ON"
+            install-openmp: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          allow-prereleases: true
+          python-version: ${{ matrix.python-version }}
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build
+          if [ "${{ matrix.include-eigen.system-eigen }}" = "ON" ]; then
+            sudo apt-get install -y libeigen3-dev
+          fi
+          if [ "${{ matrix.include-eigen.install-openmp }}" = "true" ]; then
+            sudo apt-get install -y libomp-dev
+          fi
+      - name: Install package
+        run: |
+          pip install -e ".[dev]" \
+            --config-settings=cmake.args="-DQUAK_USE_SYSTEM_EIGEN=${{ matrix.include-eigen.system-eigen }}"
+      - name: Run tests
+        run: pytest tests/ -v --tb=short
+      - name: Coverage
+        if: matrix.python-version == '3.12' && matrix.include-eigen.system-eigen == 'OFF' && matrix.include-eigen.install-openmp == true
+        run: pytest tests/ --cov=quak --cov-report=term-missing --cov-branch

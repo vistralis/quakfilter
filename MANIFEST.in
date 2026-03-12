@@ -1,0 +1,8 @@
+recursive-include csrc *.cpp *.hpp
+include CMakeLists.txt
+include LICENSE README.md CHANGELOG.md
+include pyproject.toml
+prune .context
+prune .scratch
+prune .github
+prune .agents

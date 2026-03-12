@@ -1,0 +1,653 @@
+/* quakfilter API Documentation — Vistralis theme */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #0f1016;
+    --bg-card: rgba(25, 27, 36, 0.6);
+    --bg-sidebar: rgba(15, 16, 22, 0.95);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent-blue: #3b82f6;
+    --accent-cyan: #2dd4bf;
+    --accent-green: #22c55e;
+    --accent-amber: #f59e0b;
+    --accent-red: #ef4444;
+    --card-border: rgba(255, 255, 255, 0.05);
+    --nav-bg: rgba(10, 10, 15, 0.95);
+    --sidebar-width: 260px;
+    --code-bg: #12131a;
+
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Navigation ── */
+.docs-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+    z-index: 100;
+}
+
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.nav-brand img {
+    height: 24px;
+}
+
+.nav-breadcrumb {
+    color: var(--text-muted);
+    margin: 0 0.4rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--accent-cyan);
+}
+
+/* ── Centered Wrapper (PyTorch-style) ── */
+.docs-wrapper {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 60px;
+    min-height: calc(100vh - 60px);
+}
+
+/* ── Sidebar ── */
+.docs-sidebar {
+    position: sticky;
+    top: 60px;
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    height: calc(100vh - 60px);
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--card-border);
+    flex-shrink: 0;
+}
+
+.sidebar-section {
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-section h4 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    padding: 0 0.75rem;
+}
+
+.sidebar-section a {
+    display: block;
+    padding: 0.35rem 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.88rem;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.sidebar-section a:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-section a.active {
+    color: var(--accent-cyan);
+    background: rgba(45, 212, 191, 0.08);
+}
+
+.sidebar-section a.sidebar-sub {
+    padding-left: 1.5rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.sidebar-section a.sidebar-sub:hover {
+    color: var(--text-secondary);
+}
+
+/* ── Main Content ── */
+.docs-content {
+    flex: 1;
+    min-width: 0;
+    padding: 2.5rem 3rem 4rem 3rem;
+    max-width: 900px;
+}
+
+.docs-content h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+}
+
+.docs-content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    letter-spacing: -0.01em;
+}
+
+.docs-content h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.docs-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.docs-content > .subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.docs-content p {
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+}
+
+.docs-content a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.docs-content a:hover {
+    color: var(--accent-blue);
+}
+
+/* ── Code ── */
+pre {
+    background: var(--code-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+}
+
+code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    color: #93c5fd;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    color: inherit;
+}
+
+/* ── Tables ── */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.75rem 0 1.5rem;
+    font-size: 0.9rem;
+}
+
+th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    padding: 0.6rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+td {
+    padding: 0.5rem 1rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* ── Cards Grid ── */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.docs-card {
+    background: var(--bg-card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, border-color 0.2s;
+    text-decoration: none !important;
+    display: block;
+}
+
+.docs-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(45, 212, 191, 0.2);
+}
+
+.docs-card h3 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 0.4rem;
+    color: var(--text-primary);
+}
+
+.docs-card p {
+    font-size: 0.88rem;
+    margin-bottom: 0.25rem;
+}
+
+.card-count {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CLASS SECTION — the main content block
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.class-section {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(255, 255, 255, 0.06);
+}
+
+.class-section:first-child {
+    margin-top: 1rem;
+    padding-top: 0;
+    border-top: none;
+}
+
+.class-section > h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.class-name {
+    font-size: 1.25rem;
+    color: var(--accent-cyan);
+    background: rgba(45, 212, 191, 0.08);
+    padding: 0.25em 0.6em;
+    border-radius: 6px;
+}
+
+.class-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2em 0.6em;
+    border-radius: 4px;
+    background: rgba(59, 130, 246, 0.12);
+    color: var(--accent-blue);
+}
+
+.class-bases {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+}
+
+.note-muted {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 1rem;
+}
+
+/* ── Section Labels (Constructors / Methods) ── */
+.section-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   METHOD CARD — individual methods
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.method-card {
+    background: var(--bg-card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    backdrop-filter: blur(6px);
+    transition: border-color 0.2s;
+}
+
+.method-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.method-header {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.method-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary) !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+.method-card pre.signature {
+    margin: 0 0 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.82rem;
+    border-radius: 6px;
+    line-height: 1.7;
+}
+
+.method-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+/* ── Badges ── */
+.badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15em 0.5em;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.badge-classmethod {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent-blue);
+}
+
+.badge-static {
+    background: rgba(168, 85, 247, 0.15);
+    color: #a855f7;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   STRUCTURED DOCSTRING SECTIONS
+   Inspired by PyTorch/Sphinx docs layout
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Parameters / Properties / Returns sections */
+.params-section,
+.returns-section,
+.raises-section {
+    margin: 1rem 0;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid var(--accent-blue);
+    border-radius: 0 8px 8px 0;
+}
+
+.params-section h5,
+.returns-section h5,
+.raises-section h5,
+.example-section h5 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-blue);
+    margin-bottom: 0.75rem;
+}
+
+.returns-section {
+    border-left-color: var(--accent-green);
+}
+
+.returns-section h5 {
+    color: var(--accent-green);
+}
+
+.raises-section {
+    border-left-color: var(--accent-red);
+}
+
+.raises-section h5 {
+    color: var(--accent-red);
+}
+
+/* Definition lists for params */
+dl {
+    margin: 0;
+}
+
+dt {
+    font-size: 0.9rem;
+    padding: 0.3rem 0 0.1rem;
+    color: var(--text-primary);
+}
+
+dt + dt {
+    margin-top: 0.75rem;
+}
+
+dd {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.param-type {
+    color: var(--text-muted);
+    font-size: 0.85em;
+}
+
+/* Callouts */
+.callout {
+    margin: 1rem 0 1.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+}
+
+.callout strong {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.25rem;
+}
+
+.callout-note {
+    border-left: 3px solid var(--accent-cyan);
+    background: rgba(45, 212, 191, 0.05);
+}
+
+.callout-note strong {
+    color: var(--accent-cyan);
+}
+
+.callout-warning {
+    border-left: 3px solid var(--accent-amber);
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.callout-warning strong {
+    color: var(--accent-amber);
+}
+
+/* Example sections */
+.example-section {
+    margin: 1rem 0;
+}
+
+.example-section h5 {
+    color: var(--text-muted);
+}
+
+.example-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.example-section ul li {
+    padding: 0.4rem 0;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 0.25rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Lists */
+.docs-content ul,
+.docs-content ol {
+    margin: 0.5rem 0 1rem 1.5rem;
+    color: var(--text-secondary);
+}
+
+.docs-content li {
+    margin-bottom: 0.3rem;
+}
+
+/* ── Footer ── */
+.docs-footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--card-border);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .docs-sidebar {
+        display: none;
+    }
+
+    .docs-content {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .docs-footer {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav-links {
+        display: none;
+    }
+
+    .docs-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
